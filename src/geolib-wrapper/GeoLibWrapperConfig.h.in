@@ -1,0 +1,25 @@
+#pragma once
+
+#define GEOLIBWRAPPER_MAJOR_VERSION @GEOLIBWRAPPER_MAJOR_VERSION@
+#define GEOLIBWRAPPER_MINOR_VERSION @GEOLIBWRAPPER_MINOR_VERSION@
+#define GEOLIBWRAPPER_PATCH_VERSION @GEOLIBWRAPPER_PATCH_VERSION@
+
+#if defined( _MSC_VER )
+    #pragma warning( disable : 4503 )
+    #pragma warning( disable : 4251 )
+#endif
+
+#if defined ( _MSC_VER ) || \
+    defined ( __CYGWIN__ ) || \
+    defined ( __MINGW32__ ) || \
+    defined ( __BCPLUSPLUS__ ) || \
+    defined ( __MWERKS__ )
+
+    #if defined ( GEOLIBWRAPPER_LIBRARY )
+        #define GEOLIBWRAPPER_EXPORTS __declspec( dllexport )
+    #else
+        #define GEOLIBWRAPPER_EXPORTS __declspec( dllimport )
+    #endif
+#else
+    #define GEOLIBWRAPPER_EXPORTS
+#endif
