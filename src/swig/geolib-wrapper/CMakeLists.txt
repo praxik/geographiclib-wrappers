@@ -1,6 +1,6 @@
 set_source_files_properties( ${MODULE_FILE} PROPERTIES CPLUSPLUS ON )
 
-if( CSHARP_FOUND )
+if( CSHARP_FOUND OR CSHARP_MONO_FOUND )
   set( MODULE_NAME geolibwrapper )
   set( TARGET_NAME ${MODULE_NAME}_csharp )
   set( SWIG_LANGUAGE CSHARP )
@@ -13,6 +13,7 @@ if( CSHARP_FOUND )
   swig_link_libraries( ${TARGET_NAME}
     geolibwrapper
     ${GeographicLib_LIBRARIES} )
+  set_property( TARGET ${TARGET_NAME} PROPERTY PREFIX "${CMAKE_SHARED_LIBRARY_PREFIX}" )
 
   include( ModuleInstall )
 endif()

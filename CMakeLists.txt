@@ -29,6 +29,7 @@ message( STATUS "Configuring ${CMAKE_PROJECT_NAME}: v${v}\n" )
 set( INSTALL_LIBDIR lib )
 set( INSTALL_BINDIR bin )
 set( INSTALL_INCDIR include )
+set( INSTALL_SHRDIR share )
 
 if( WIN32 )
   string( REGEX REPLACE "(^| )[/-]D *NDEBUG($| )" " "
@@ -68,6 +69,8 @@ if( WIN32 )
   set( CSHARP_DOTNET_VERSION v4.0.30319 )
   set( CSHARP_DOTNET_VERSION ${CSHARP_DOTNET_VERSION} CACHE STRING "" FORCE )
   find_package( CSharp 4.0 )
+else()
+  find_package( Mono 6.12 )
 endif()
 
 #Only 64-bit...

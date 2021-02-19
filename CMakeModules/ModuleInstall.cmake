@@ -117,21 +117,27 @@ elseif( ${TARGET_CATEGORY} STREQUAL "Swig" )
     set( CSHARP_NAME ${TARGET_NAME}${CSHARP_SFX} )
     set( CSHARP_DLL ${CMAKE_SWIG_OUTDIR}/${CSHARP_NAME}.dll )
     set( CSHARP_SRC ${CMAKE_SWIG_OUTDIR}/*.cs )
+    if( NOT WIN32 )
+      set( CSHARP_COMPILER ${CSHARP_MONO_COMPILER_${CSHARP_MONO_VERSION}} )
+      set( CSHARP_PLATFORM anycpu )
+    endif()
 
     set( CSHARP_CREATED
       ${CSHARP_DLL}
       ${swig_generated_file_fullname}
       ${swig_extra_generated_files} )
-    add_custom_command(
-      TARGET ${TARGET_NAME}
-      PRE_BUILD
-      COMMAND
-        ${CMAKE_COMMAND} -E echo "Executing Pre-Build Script..." &&
-        ${CMAKE_COMMAND}
-          -Dswig_generated_file_fullname=${swig_generated_file_fullname}
-          -DCMAKE_SWIG_OUTDIR=${CMAKE_SWIG_OUTDIR}
-          -P ${SWIG_SRC_DIR}/prebuild.cmake )
-
+    #TODO: PRE_BUILD only works for VS generators
+    if( WIN32 )
+      add_custom_command(
+        TARGET ${TARGET_NAME}
+        PRE_BUILD
+        COMMAND
+          ${CMAKE_COMMAND} -E echo "Executing Pre-Build Script..." &&
+          ${CMAKE_COMMAND}
+            -Dswig_generated_file_fullname=${swig_generated_file_fullname}
+            -DCMAKE_SWIG_OUTDIR=${CMAKE_SWIG_OUTDIR}
+            -P ${SWIG_SRC_DIR}/prebuild.cmake )
+    endif()
     add_custom_command(
       TARGET ${TARGET_NAME}
       POST_BUILD
@@ -156,7 +162,7 @@ elseif( ${TARGET_CATEGORY} STREQUAL "Swig" )
 
     install(
       FILES ${CSHARP_DLL}
-      DESTINATION ${INSTALL_BINDIR} )
+      DESTINATION ${MODULE_OUTPUT_DIRECTORY} )
 
   elseif(  ${SWIG_LANGUAGE} STREQUAL "PYTHON" )
     install(
