@@ -5,6 +5,7 @@
 
 // --- GeographicLib Includes --- //
 #include <GeographicLib/Geodesic.hpp>
+#include <GeographicLib/GeodesicLine.hpp>
 #include <GeographicLib/PolygonArea.hpp>
 
 // --- Standard Includes --- //
@@ -23,6 +24,17 @@ public:
 
     ///
     static double Inverse(
+        double lat1, double lon1,
+        double lat2, double lon2 );
+
+    ///
+    static double Inverse(
+        double lat1, double lon1,
+        double lat2, double lon2,
+        double& azi1, double& azi2 );
+
+    ///
+    static GeographicLib::GeodesicLine InverseLine(
         double lat1, double lon1,
         double lat2, double lon2 );
 

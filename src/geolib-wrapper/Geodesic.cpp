@@ -25,6 +25,23 @@ double Geodesic::Inverse(
     return s12;
 }
 ////////////////////////////////////////////////////////////////////////////////
+double Geodesic::Inverse(
+    double lat1, double lon1,
+    double lat2, double lon2,
+    double& azi1, double& azi2 )
+{
+    double s12;
+    s_geod.Inverse( lat1, lon1, lat2, lon2, s12, azi1, azi2 );
+    return s12;
+}
+////////////////////////////////////////////////////////////////////////////////
+GeographicLib::GeodesicLine Geodesic::InverseLine(
+    double lat1, double lon1,
+    double lat2, double lon2 )
+{
+    return s_geod.InverseLine( lat1, lon1, lat2, lon2 );
+}
+////////////////////////////////////////////////////////////////////////////////
 void Geodesic::PerimeterArea(
     std::vector< std::pair< double, double > > const& latlons,
     double& perimeter,
