@@ -14,6 +14,10 @@ if( CSHARP_FOUND OR CSHARP_MONO_FOUND )
     geolibwrapper
     ${GeographicLib_LIBRARIES} )
   set_property( TARGET ${TARGET_NAME} PROPERTY PREFIX "${CMAKE_SHARED_LIBRARY_PREFIX}" )
+  set_target_properties( ${TARGET_NAME} PROPERTIES
+    BUILD_RPATH_USE_ORIGIN ON
+    BUILD_RPATH "$ORIGIN"
+    INSTALL_RPATH "$ORIGIN" )
 
   include( ModuleInstall )
 endif()
